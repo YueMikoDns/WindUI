@@ -11583,8 +11583,4 @@ end
 return aA
 end
 
-function ac.Window(as,at)
-return ac:CreateWindow(at)
-end
-
 return ac

@@ -339,8 +339,4 @@ function WindUI:CreateWindow(Config)
     return Window
 end
 
-function WindUI:Window(Config)
-    return WindUI:CreateWindow(Config)
-end
-
 return WindUI
