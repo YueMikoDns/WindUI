@@ -398,6 +398,8 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
         Dropdown.UIElements.MenuCanvas.Size = UDim2.new(0, maxWidth + 6 + 6 + 5 + 5 + 18 + 6 + 6, Dropdown.UIElements.MenuCanvas.Size.Y.Scale, Dropdown.UIElements.MenuCanvas.Size.Y.Offset)
         --RecalculateListSize()
         Callback()
+        
+        Dropdown.Values = Values
     end
     
       

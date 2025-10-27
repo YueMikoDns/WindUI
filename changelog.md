@@ -1,4 +1,5 @@
-# 1.6.56
+# 1.6.57
 ## Changelog:
-- Fixed Window Background (theme)
-- Fixed Tags (no longer cover the title)
+- Added `Radius` and `ElementsRadius` to `Window` (may not work correctly)
+- Fixed `Keybind:Lock()`
+- Added `Icon` to `Tag`

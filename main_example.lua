@@ -49,6 +49,7 @@ local Window = WindUI:CreateWindow({
 do
     Window:Tag({
         Title = "v" .. WindUI.Version,
+        Icon = "github",
         Color = Color3.fromHex("#6b31ff")
     })
 end
@@ -480,8 +481,24 @@ do
     })
 end
 
+--[[  VideoFrame is not working with custom video on exploits
+      I don't know why
+    
+-- */  Video Tab  /* --
+do
+    local VideoTab = ElementsSection:Tab({
+        Title = "Video",
+        Icon = "video",
+    })
+    
+    VideoTab:Video({
+        Title = "My Video Hahahah", -- optional
+        Author = ".ftgs", -- optional
+        Video = "https://cdn.discordapp.com/attachments/1337368451865645096/1402703845657673878/VID_20250616_180732_158.webm?ex=68fc5f01&is=68fb0d81&hm=f4f0a88dbace2d3cef92535b2e57effae6d4c4fc444338163faafa7f3fdac529&"
+    })
+end
 
-
+--]]
 
 
 -- */  Config Usage  /* --

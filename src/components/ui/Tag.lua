@@ -69,6 +69,7 @@ end
 function Tag:New(TagConfig, Parent)
     local TagModule = {
         Title = TagConfig.Title or "Tag",
+        Icon = TagConfig.Icon,
         Color = TagConfig.Color or Color3.fromHex("#315dff"),
         Radius = TagConfig.Radius or 999,
         
@@ -76,7 +77,23 @@ function Tag:New(TagConfig, Parent)
         Height = 26,
         Padding = 10,
         TextSize = 14,
+        IconSize = 16,
     }
+    
+    local TagIcon
+    if TagModule.Icon then
+        TagIcon = Creator.Image(
+            TagModule.Icon,
+            TagModule.Icon,
+            0,
+            TagConfig.Window,
+            "Tag",
+            false
+        )
+        
+        TagIcon.Size = UDim2.new(0,TagModule.IconSize,0,TagModule.IconSize)
+        TagIcon.ImageLabel.ImageColor3 = typeof(TagModule.Color) == "Color3" and GetTextColorForHSB(TagModule.Color) or nil
+    end
     
     local TagTitle = New("TextLabel", {
         BackgroundTransparency = 1,
@@ -97,6 +114,7 @@ function Tag:New(TagConfig, Parent)
         end
         
         TagTitle.TextColor3 = GetTextColorForHSB(GetAverageColor(BackgroundGradient))
+        TagIcon.ImageLabel.ImageColor3 = GetTextColorForHSB(GetAverageColor(BackgroundGradient))
     end
     
     
@@ -112,10 +130,12 @@ function Tag:New(TagConfig, Parent)
             PaddingLeft = UDim.new(0,TagModule.Padding),
             PaddingRight = UDim.new(0,TagModule.Padding),
         }),
+        TagIcon,
         TagTitle,
         New("UIListLayout", {
             FillDirection = "Horizontal",
             VerticalAlignment = "Center",
+            Padding = UDim.new(0,TagModule.Padding/1.5)
         })
     })
     
@@ -138,6 +158,7 @@ function Tag:New(TagConfig, Parent)
                 BackgroundGradient:Destroy()
             end
             Tween(TagTitle, .06, { TextColor3 = GetTextColorForHSB(color) }):Play()
+            Tween(TagIcon.ImageLabel, .06, { ImageColor3 = GetTextColorForHSB(color) }):Play()
             Tween(TagFrame, .06, { ImageColor3 = color }):Play()
         end
     end

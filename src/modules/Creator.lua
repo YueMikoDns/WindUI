@@ -589,15 +589,23 @@ end
 Icons.Init(New, "Icon")
 
 
-function Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, ThemeTagName)
-    local function SanitizeFilename(str)
-        str = str:gsub("[%s/\\:*?\"<>|]+", "-")
-        str = str:gsub("[^%w%-_%.]", "")
-        return str
+function Creator.SanitizeFilename(url)
+    local filename = url:match("([^/]+)$") or url
+    
+    filename = filename:gsub("%.[^%.]+$", "")
+    
+    filename = filename:gsub("[^%w%-_]", "_")
+    
+    if #filename > 50 then
+        filename = filename:sub(1, 50)
     end
     
+    return filename
+end
+
+function Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, ThemeTagName)
     Folder = Folder or "Temp"
-    Name = SanitizeFilename(Name)
+    Name = Creator.SanitizeFilename(Name)
     
     local ImageFrame = New("Frame", {
         Size = UDim2.new(0,0,0,0),
@@ -666,5 +674,6 @@ function Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, Them
     
     return ImageFrame
 end
+
 
 return Creator
