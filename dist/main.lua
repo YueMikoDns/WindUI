@@ -3559,7 +3559,9 @@ ak[al]=am
 end
 
 aj.TextColor3=GetTextColorForHSB(GetAverageColor(ak))
+if ai then
 ai.ImageLabel.ImageColor3=GetTextColorForHSB(GetAverageColor(ak))
+end
 end
 
 
@@ -3603,7 +3605,9 @@ if ak then
 ak:Destroy()
 end
 ad(aj,.06,{TextColor3=GetTextColorForHSB(an)}):Play()
+if ai then
 ad(ai.ImageLabel,.06,{ImageColor3=GetTextColorForHSB(an)}):Play()
+end
 ad(al,.06,{ImageColor3=an}):Play()
 end
 end

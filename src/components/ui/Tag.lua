@@ -114,7 +114,9 @@ function Tag:New(TagConfig, Parent)
         end
         
         TagTitle.TextColor3 = GetTextColorForHSB(GetAverageColor(BackgroundGradient))
-        TagIcon.ImageLabel.ImageColor3 = GetTextColorForHSB(GetAverageColor(BackgroundGradient))
+        if TagIcon then
+            TagIcon.ImageLabel.ImageColor3 = GetTextColorForHSB(GetAverageColor(BackgroundGradient))
+        end
     end
     
     
@@ -158,7 +160,9 @@ function Tag:New(TagConfig, Parent)
                 BackgroundGradient:Destroy()
             end
             Tween(TagTitle, .06, { TextColor3 = GetTextColorForHSB(color) }):Play()
-            Tween(TagIcon.ImageLabel, .06, { ImageColor3 = GetTextColorForHSB(color) }):Play()
+            if TagIcon then
+                Tween(TagIcon.ImageLabel, .06, { ImageColor3 = GetTextColorForHSB(color) }):Play()
+            end
             Tween(TagFrame, .06, { ImageColor3 = color }):Play()
         end
     end
