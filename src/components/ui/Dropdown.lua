@@ -141,26 +141,38 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
     
     local SearchLabel
     
-    
     function DropdownModule:Display()
-		local Values = Dropdown.Values
-		local Str = ""
-
-		if Dropdown.Multi then
-			for Idx, Value in next, Values do
-                local Title = typeof(Value) == "table" and Value.Title or Value
-				if table.find((typeof(Dropdown.Value) == table and Dropdown.Value.Title or Dropdown.Value), Title) then
-					Str = Str .. Title .. ", "
-				end
-			end
-			Str = Str:sub(1, #Str - 2)
-		else
-			Str = typeof(Dropdown.Value) == "table" and Dropdown.Value.Title or Dropdown.Value or ""
-		end
+        local Values = Dropdown.Values
+        local Str = ""
+    
+        if Dropdown.Multi then
+            local selected = {}
+            if typeof(Dropdown.Value) == "table" then
+                for _, item in ipairs(Dropdown.Value) do
+                    local title = typeof(item) == "table" and item.Title or item
+                    selected[title] = true
+                end
+            end
+    
+            for _, value in ipairs(Values) do
+                local title = typeof(value) == "table" and value.Title or value
+                if selected[title] then
+                    Str = Str .. title .. ", "
+                end
+            end
+            
+            if #Str > 0 then
+                Str = Str:sub(1, #Str - 2)
+            end
+        else
+            Str = typeof(Dropdown.Value) == "table" and Dropdown.Value.Title or Dropdown.Value or ""
+        end
+    
         if Dropdown.UIElements.Dropdown then
             Dropdown.UIElements.Dropdown.Frame.Frame.TextLabel.Text = (Str == "" and "--" or Str)
         end
-	end
+    end
+    
     
     local function Callback(customCallback)
         DropdownModule:Display()
@@ -339,12 +351,33 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
                     })
                 }, true)
             
-            
+                if Dropdown.Multi and typeof(Dropdown.Value) == "string" then
+                    for _, i in next, Dropdown.Values do
+                        if typeof(i) == "table" then
+                            if i.Title == Dropdown.Value then Dropdown.Value = { i } end
+                        else
+                            if i == Dropdown.Value then Dropdown.Value = { Dropdown.Value } end
+                        end
+                    end
+                --[[elseif not Dropdown.Multi and typeof(Dropdown.Value) == "table" then
+                    Dropdown.Value = Dropdown.Value[1] or ""--]]
+                end
+                
                 if Dropdown.Multi then
-                    TabMain.Selected = table.find(Dropdown.Value or {}, TabMain.Name)
+                    local found = false
+                    if typeof(Dropdown.Value) == "table" then
+                        for _, item in ipairs(Dropdown.Value) do
+                            local itemName = typeof(item) == "table" and item.Title or item
+                            if itemName == TabMain.Name then
+                                found = true
+                                break
+                            end
+                        end
+                    end
+                    TabMain.Selected = found
                 else
-                    TabMain.Selected = typeof( Dropdown.Value) == "table" and Dropdown.Value.Title == TabMain.Name
-                                    or Dropdown.Value == TabMain.Name
+                    local currentValue = typeof(Dropdown.Value) == "table" and Dropdown.Value.Title or Dropdown.Value
+                    TabMain.Selected = currentValue == TabMain.Name
                 end
                 
                 if TabMain.Selected then
@@ -390,7 +423,7 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
                                     Tween(TabMain.UIElements.TabIcon.ImageLabel, 0.1, {ImageTransparency = .2}):Play()
                                 end
                                 
-                                for i, v in ipairs(Dropdown.Value) do
+                                for i, v in next, Dropdown.Value do
                                     if typeof(v) == "table" and (v.Title == TabMain.Name) or (v == TabMain.Name) then
                                         table.remove(Dropdown.Value, i)
                                         break
