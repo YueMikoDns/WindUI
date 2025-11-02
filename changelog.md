@@ -1,5 +1,6 @@
-# 1.6.57
+# 1.6.6
 ## Changelog:
-- Added `Radius` and `ElementsRadius` to `Window` (may not work correctly)
-- Fixed `Keybind:Lock()`
-- Added `Icon` to `Tag`
+- Fixed `Image` in `Paragraph` element (element image)
+- Fixed Multi Dropdown
+- Dropdown is now more advanced (example at [main_example.lua](https://github.com/Footagesus/WindUI/blob/main/main_example.lua))
+- 
