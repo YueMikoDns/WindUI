@@ -55,14 +55,13 @@ function Element:New(Config)
         Desc = Dropdown.Desc,
         Parent = Config.Parent,
         TextOffset = Dropdown.Width,
-        Hover = true,
+        Hover = not Dropdown.Callback and true or false,
         Tab = Config.Tab,
         Index = Config.Index,
         Window = Config.Window,
         ElementTable = Dropdown,
     })
     
-    Dropdown.DropdownMenu = CreateDropdown(Config, Dropdown, Element, CanCallback, "Dropdown")
     
     if Dropdown.Callback then
         Dropdown.UIElements.Dropdown = CreateLabel("", nil, Dropdown.DropdownFrame.UIElements.Main, nil, Config.Window.NewElements and 12 or 10)
@@ -81,12 +80,16 @@ function Element:New(Config)
         
         
         
-        Dropdown.Display = Dropdown.DropdownMenu.Display
-        Dropdown.Refresh = Dropdown.DropdownMenu.Refresh
-        Dropdown.Select = Dropdown.DropdownMenu.Select
-        Dropdown.Open = Dropdown.DropdownMenu.Open
-        Dropdown.Close = Dropdown.DropdownMenu.Close
     end
+    
+    Dropdown.DropdownMenu = CreateDropdown(Config, Dropdown, Element, CanCallback, "Dropdown")
+    
+    
+    Dropdown.Display = Dropdown.DropdownMenu.Display
+    Dropdown.Refresh = Dropdown.DropdownMenu.Refresh
+    Dropdown.Select = Dropdown.DropdownMenu.Select
+    Dropdown.Open = Dropdown.DropdownMenu.Open
+    Dropdown.Close = Dropdown.DropdownMenu.Close
     
     local DropdownIcon = New("ImageLabel", {
         Image = Creator.Icon("chevrons-up-down")[1],
