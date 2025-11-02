@@ -294,6 +294,7 @@ return function(Config)
         ZIndex = -999999999999999,
         Name = "Blur",
     })
+    
 
 
     if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
@@ -608,7 +609,7 @@ return function(Config)
             TextSize = 13,
             LayoutOrder = 2,
             ThemeTag = {
-                TextColor3 = "TopbarAuthor"
+                TextColor3 = "WindowTopbarAuthor"
             },
             Name = "Author",
         })
@@ -631,7 +632,7 @@ return function(Config)
         TextXAlignment = "Left",
         TextSize = 16,
         ThemeTag = {
-            TextColor3 = "TopbarTitle"
+            TextColor3 = "WindowTopbarTitle"
         }
     })
     
@@ -804,10 +805,10 @@ return function(Config)
             Icon,
             0,
             Window.Folder,
-            "TopbarIcon",
+            "WindowTopbarIcon",
             true,
             IconThemed,
-            "TopbarButtonIcon"
+            "WindowTopbarButtonIcon"
         )
         IconFrame.Size = UDim2.new(0,Window.TopBarButtonIconSize,0,Window.TopBarButtonIconSize)
         IconFrame.AnchorPoint = Vector2.new(0.5,0.5)
@@ -934,7 +935,7 @@ return function(Config)
                 "Window",
                 true,
                 Window.IconThemed,
-                "TopbarIcon"
+                "WindowTopbarIcon"
             )
             WindowIcon.Parent = Window.UIElements.Main.Main.Topbar.Left
             WindowIcon.Size = UDim2.new(0,Window.IconSize,0,Window.IconSize)
