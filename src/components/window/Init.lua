@@ -31,6 +31,7 @@ return function(Config)
         Resizable = Config.Resizable ~= false,
         Background = Config.Background,
         BackgroundImageTransparency = Config.BackgroundImageTransparency or 0,
+        ShadowTransparency = Config.ShadowTransparency or 0.7,
         User = Config.User or {},
         
         Size = Config.Size,
@@ -278,10 +279,13 @@ return function(Config)
         })
     })
     
-    local Blur = New("ImageLabel", {
+    local Blur = New("ImageLabel", { -- Shadow
         Image = "rbxassetid://8992230677",
-        ImageColor3 = Color3.new(0,0,0),
-        ImageTransparency = 1, -- 0.7
+        ThemeTag = {
+            ImageColor3 = "WindowShadow",
+            --ImageTransparency = "WindowShadowTransparency",
+        },
+        ImageTransparency = 1, -- .7
         Size = UDim2.new(1,120,1,116),
         Position = UDim2.new(0,-120/2,0,-116/2),
         ScaleType = "Slice",
@@ -1118,7 +1122,7 @@ return function(Config)
             end
             
             --Tween(Window.UIElements.Main.Background.UIScale, 0.2, {Scale = 1}, Enum.EasingStyle.Back, Enum.EasingDirection.Out):Play()
-            Tween(Blur, 0.25, {ImageTransparency = .7}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
+            Tween(Blur, 0.25, {ImageTransparency = Window.ShadowTransparency}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
             if UIStroke then
                 Tween(UIStroke, 0.25, {Transparency = .8}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
             end
