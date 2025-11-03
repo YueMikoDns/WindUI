@@ -303,7 +303,7 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
                         -- }),
                         TabIcon,
                         New("Frame", {
-                            Size = UDim2.new(1,0,0,0),
+                            Size = UDim2.new(1,TabIcon and -Element.TabPadding-Element.TabIcon or 0,0,0),
                             BackgroundTransparency = 1,
                             AutomaticSize = "Y",
                             Name = "Title",
@@ -322,7 +322,7 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
                                 LayoutOrder = 999,
                                 AutomaticSize = "Y",
                                 --TextTruncate = "AtEnd",
-                                Size = UDim2.new(1,TabIcon and -Element.TabPadding-Element.TabIcon or 0,0,0),
+                                Size = UDim2.new(1,0,0,0),
                             }),
                             New("TextLabel", {
                                 Text = TabMain.Desc or "",
@@ -338,6 +338,7 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
                                 LayoutOrder = 999,
                                 AutomaticSize = "Y",
                                 --TextTruncate = "AtEnd",
+                                TextWrapped = true,
                                 Size = UDim2.new(1,0,0,0),
                                 Visible = TabMain.Desc and true or false,
                                 Name = "Desc",
@@ -478,8 +479,7 @@ function DropdownMenu.New(Config, Dropdown, Element, CanCallback, Type)
             for _, tabmain in next, Dropdown.Tabs do
                 if tabmain.UIElements.TabItem.Frame.UIListLayout then
                     --local width = getTextWidth(tabmain.UIElements.TabItem.TextLabel.Text, tabmain.UIElements.TabItem.TextLabel.Font, tabmain.UIElements.TabItem.TextLabel.TextSize)
-                    local width = tabmain.UIElements.TabItem.Frame.UIListLayout.AbsoluteContentSize.X
-                    maxWidth = math.max(maxWidth, width)
+                    maxWidth = math.max(maxWidth, tabmain.UIElements.TabItem.Frame.UIListLayout.AbsoluteContentSize.X)
                 end
             end
         end
