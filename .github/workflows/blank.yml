@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -35,9 +37,10 @@ jobs:
       - name: Run build
         run: npm run build
 
-      - name: Upload main.lua
-        uses: actions/upload-artifact@v4
-        with:
-          name: main.lua
-          path: dist/main.lua
-          compression-level: 0
+      - name: Commit dist/main.lua back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/main.lua
+          git commit -m "[AUTO] Upload built main.lua" || echo "No changes to commit"
+          git push origin main
