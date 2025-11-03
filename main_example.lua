@@ -37,6 +37,7 @@ local Window = WindUI:CreateWindow({
     Title = ".ftgs hub  |  WindUI Example",
     Author = "by .ftgs • Footagesus",
     Folder = "ftgshub",
+    Icon = "bird",
     NewElements = true,
     --Size = UDim2.fromOffset(700,700),
     
@@ -71,7 +72,7 @@ end
 
 -- */  Theme (soon)  /* --
 do
-    WindUI:AddTheme({
+    --[[WindUI:AddTheme({
         Name = "Stylish",
         
         Accent = Color3.fromHex("#3b82f6"), 
@@ -97,7 +98,7 @@ do
         ElementTitle = Color3.fromHex("#f8fafc"),
         ElementDesc = Color3.fromHex("#cbd5e1"),
         ElementIcon = Color3.fromHex("#60a5fa"),
-    })
+    })--]]
     
     -- WindUI:SetTheme("Stylish")
 end
@@ -352,6 +353,21 @@ do
     ToggleTab:Toggle({
         Title = "Toggle",
         Desc = "Toggle example"
+    })
+    
+    ToggleTab:Space()
+    
+    ToggleTab:Toggle({
+        Title = "Checkbox",
+        Type = "Checkbox",
+    })
+    
+    ToggleTab:Space()
+    
+    ToggleTab:Toggle({
+        Title = "Checkbox",
+        Desc = "Checkbox example",
+        Type = "Checkbox",
     })
     
     ToggleTab:Space()
@@ -634,7 +650,8 @@ do -- config elements
             },
             {
                 Title = "Category C",
-                Icon = "droplet"
+                Icon = "droplet",
+                Locked = true,
             },
         },
         Value = "Category A",
