@@ -57,6 +57,9 @@ local Window = WindUI:CreateWindow({
     }
 })
 
+
+--Window:SetUIScale(.8)
+
 -- */  Tags  /* --
 do
     Window:Tag({
