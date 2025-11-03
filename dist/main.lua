@@ -4,7 +4,7 @@
     | |/ |/ / / _ \/ _  / /_/ // /  
     |__/|__/_/_//_/\_,_/\____/___/
     
-    v1.6.6  |  2025-11-02  |  Roblox UI Library for scripts
+    v1.6.6  |  2025-11-03  |  Roblox UI Library for scripts
     
     To view the source code, see the `src/` folder on the official GitHub repository.
     
@@ -4749,7 +4749,72 @@ Padding=UDim.new(0,8)
 }),
 },nil,true)
 
-local ax,ay=ac(af.UICorner,"Squircle",{
+
+local ax,ay=ac(af.UICorner,"Squircle-Outline",{
+Size=UDim2.new(1,0,1,0),
+ImageTransparency=1,
+Active=false,
+ThemeTag={
+ImageColor3="Text",
+},
+Parent=aq,
+},{
+ab("UIListLayout",{
+FillDirection="Horizontal",
+VerticalAlignment="Center",
+HorizontalAlignment="Center",
+Padding=UDim.new(0,8)
+}),
+ab("UIGradient",{
+Name="HoverGradient",
+Color=ColorSequence.new{
+ColorSequenceKeypoint.new(0,Color3.new(1,1,1)),
+ColorSequenceKeypoint.new(0.5,Color3.new(1,1,1)),
+ColorSequenceKeypoint.new(1,Color3.new(1,1,1))
+},
+Transparency=NumberSequence.new{
+NumberSequenceKeypoint.new(0,1),
+NumberSequenceKeypoint.new(0.25,0.9),
+NumberSequenceKeypoint.new(0.5,0.3),
+NumberSequenceKeypoint.new(0.75,0.9),
+NumberSequenceKeypoint.new(1,1)
+},
+}),
+},nil,true)
+
+local az,aA=ac(af.UICorner,"Squircle",{
+Size=UDim2.new(1,0,1,0),
+ImageTransparency=1,
+Active=false,
+ThemeTag={
+ImageColor3="Text",
+},
+Parent=aq,
+},{
+ab("UIGradient",{
+Name="HoverGradient",
+Color=ColorSequence.new{
+ColorSequenceKeypoint.new(0,Color3.new(1,1,1)),
+ColorSequenceKeypoint.new(0.5,Color3.new(1,1,1)),
+ColorSequenceKeypoint.new(1,Color3.new(1,1,1))
+},
+Transparency=NumberSequence.new{
+NumberSequenceKeypoint.new(0,1),
+NumberSequenceKeypoint.new(0.25,0.9),
+NumberSequenceKeypoint.new(0.5,0.3),
+NumberSequenceKeypoint.new(0.75,0.9),
+NumberSequenceKeypoint.new(1,1)
+},
+}),
+ab("UIListLayout",{
+FillDirection="Horizontal",
+VerticalAlignment="Center",
+HorizontalAlignment="Center",
+Padding=UDim.new(0,8)
+}),
+},nil,true)
+
+local aB,aC=ac(af.UICorner,"Squircle",{
 Size=UDim2.new(1,0,0,0),
 AutomaticSize="Y",
 ImageTransparency=af.Color and.05 or.93,
@@ -4778,31 +4843,39 @@ PaddingBottom=UDim.new(0,af.UIPadding),
 }),
 },true,true)
 
-af.UIElements.Main=ax
+af.UIElements.Main=aB
 af.UIElements.Locked=ar
 
 if af.Hover then
-aa.AddSignal(ax.MouseEnter,function()
+aa.AddSignal(aB.MouseEnter,function()
 if ai then
-ad(ax,.05,{ImageTransparency=af.Color and.15 or.9}):Play()
+ad(aB,.12,{ImageTransparency=af.Color and.15 or.9}):Play()
+ad(az,.12,{ImageTransparency=.9}):Play()
+ad(ax,.12,{ImageTransparency=.8}):Play()
+aa.AddSignal(aB.MouseMoved,function(aD,aE)
+az.HoverGradient.Offset=Vector2.new(((aD-aB.AbsolutePosition.X)/aB.AbsoluteSize.X)-0.5,0)
+ax.HoverGradient.Offset=Vector2.new(((aD-aB.AbsolutePosition.X)/aB.AbsoluteSize.X)-0.5,0)
+end)
 end
 end)
-aa.AddSignal(ax.InputEnded,function()
+aa.AddSignal(aB.InputEnded,function()
 if ai then
-ad(ax,.05,{ImageTransparency=af.Color and.05 or.93}):Play()
+ad(aB,.12,{ImageTransparency=af.Color and.05 or.93}):Play()
+ad(az,.12,{ImageTransparency=1}):Play()
+ad(ax,.12,{ImageTransparency=1}):Play()
 end
 end)
 end
 
-function af.SetTitle(az,aA)
-af.Title=aA
-am.Text=aA
+function af.SetTitle(aD,aE)
+af.Title=aE
+am.Text=aE
 end
 
-function af.SetDesc(az,aA)
-af.Desc=aA
-an.Text=aA or""
-if not aA then
+function af.SetDesc(aD,aE)
+af.Desc=aE
+an.Text=aE or""
+if not aE then
 an.Visible=false
 elseif not an.Visible then
 an.Visible=true
@@ -4810,9 +4883,9 @@ end
 end
 
 
-function af.Colorize(az,aA,aB)
+function af.Colorize(aD,aE,b)
 if af.Color then
-aA[aB]=typeof(af.Color)=="string"
+aE[b]=typeof(af.Color)=="string"
 and GetTextColorForHSB(Color3.fromHex(aa.Colors[af.Color]))
 or typeof(af.Color)=="Color3"
 and GetTextColorForHSB(af.Color)
@@ -4839,18 +4912,18 @@ end
 
 
 
-function af.SetThumbnail(az,aA,aB)
-af.Thumbnail=aA
-if aB then
-af.ThumbnailSize=aB
-ah=aB
+function af.SetThumbnail(aD,aE,b)
+af.Thumbnail=aE
+if b then
+af.ThumbnailSize=b
+ah=b
 end
 
 if ak then
-if aA then
+if aE then
 ak:Destroy()
 ak=aa.Image(
-aA,
+aE,
 af.Title,
 af.UICorner-3,
 ae.Window.Folder,
@@ -4860,17 +4933,17 @@ af.IconThemed
 )
 ak.Size=UDim2.new(1,0,0,ah)
 ak.Parent=af.UIElements.Container
-local aC=af.UIElements.Container:FindFirstChild"UIListLayout"
-if aC then
+local e=af.UIElements.Container:FindFirstChild"UIListLayout"
+if e then
 ak.LayoutOrder=-1
 end
 else
 ak.Visible=false
 end
 else
-if aA then
+if aE then
 ak=aa.Image(
-aA,
+aE,
 af.Title,
 af.UICorner-3,
 ae.Window.Folder,
@@ -4880,24 +4953,24 @@ af.IconThemed
 )
 ak.Size=UDim2.new(1,0,0,ah)
 ak.Parent=af.UIElements.Container
-local aC=af.UIElements.Container:FindFirstChild"UIListLayout"
-if aC then
+local e=af.UIElements.Container:FindFirstChild"UIListLayout"
+if e then
 ak.LayoutOrder=-1
 end
 end
 end
 end
 
-function af.SetImage(az,aA,aB)
-af.Image=aA
-if aB then
-af.ImageSize=aB
-ag=aB
+function af.SetImage(aD,aE,b)
+af.Image=aE
+if b then
+af.ImageSize=b
+ag=b
 end
 
-if aA then
+if aE then
 al=aa.Image(
-aA,
+aE,
 af.Title,
 af.UICorner-3,
 ae.Window.Folder,
@@ -4926,25 +4999,25 @@ end
 af.UIElements.Container.TitleFrame.TitleFrame.Size=UDim2.new(1,-aj,1,0)
 end
 
-function af.Destroy(az)
-ax:Destroy()
+function af.Destroy(aD)
+aB:Destroy()
 end
 
 
-function af.Lock(az)
+function af.Lock(aD)
 ai=false
 ar.Active=true
 ar.Visible=true
 end
 
-function af.Unlock(az)
+function af.Unlock(aD)
 ai=true
 ar.Active=false
 ar.Visible=false
 end
 
-function af.Highlight(az)
-local aA=ab("UIGradient",{
+function af.Highlight(aD)
+local aE=ab("UIGradient",{
 Color=ColorSequence.new{
 ColorSequenceKeypoint.new(0,Color3.new(1,1,1)),
 ColorSequenceKeypoint.new(0.5,Color3.new(1,1,1)),
@@ -4962,7 +5035,7 @@ Offset=Vector2.new(-1,0),
 Parent=at
 })
 
-local aB=ab("UIGradient",{
+local b=ab("UIGradient",{
 Color=ColorSequence.new{
 ColorSequenceKeypoint.new(0,Color3.new(1,1,1)),
 ColorSequenceKeypoint.new(0.5,Color3.new(1,1,1)),
@@ -4980,14 +5053,14 @@ Offset=Vector2.new(-1,0),
 Parent=av
 })
 
-at.ImageTransparency=0.25
+at.ImageTransparency=0.65
 av.ImageTransparency=0.88
 
-ad(aA,0.75,{
+ad(aE,0.75,{
 Offset=Vector2.new(1,0)
 }):Play()
 
-ad(aB,0.75,{
+ad(b,0.75,{
 Offset=Vector2.new(1,0)
 }):Play()
 
@@ -4996,20 +5069,22 @@ task.spawn(function()
 task.wait(.75)
 at.ImageTransparency=1
 av.ImageTransparency=1
-aA:Destroy()
-aB:Destroy()
+aE:Destroy()
+b:Destroy()
 end)
 end
 
 
-function af.UpdateShape(az)
+function af.UpdateShape(aD)
 if ae.Window.NewElements then
-local aA=getElementPosition(az.Elements,af.Index)
-if aA and ax then
-ay:SetType(aA)
-as:SetType(aA)
-aw:SetType(aA)
-au:SetType(aA.."-Outline")
+local aE=getElementPosition(aD.Elements,af.Index)
+if aE and aB then
+aC:SetType(aE)
+as:SetType(aE)
+aw:SetType(aE)
+au:SetType(aE.."-Outline")
+aA:SetType(aE)
+ay:SetType(aE.."-Outline")
 end
 end
 end
@@ -6299,7 +6374,7 @@ CornerRadius=UDim.new(0,an.MenuCorner-an.MenuPadding)
 
 az,
 aj("Frame",{
-Size=UDim2.new(1,0,0,0),
+Size=UDim2.new(1,az and-an.TabPadding-an.TabIcon or 0,0,0),
 BackgroundTransparency=1,
 AutomaticSize="Y",
 Name="Title",
@@ -6318,7 +6393,7 @@ TextTransparency=ap=="Dropdown"and.4 or.05,
 LayoutOrder=999,
 AutomaticSize="Y",
 
-Size=UDim2.new(1,az and-an.TabPadding-an.TabIcon or 0,0,0),
+Size=UDim2.new(1,0,0,0),
 }),
 aj("TextLabel",{
 Text=ay.Desc or"",
@@ -6334,6 +6409,7 @@ TextTransparency=ap=="Dropdown"and.6 or.35,
 LayoutOrder=999,
 AutomaticSize="Y",
 
+TextWrapped=true,
 Size=UDim2.new(1,0,0,0),
 Visible=ay.Desc and true or false,
 Name="Desc",
@@ -6474,8 +6550,7 @@ if ay==0 then
 for az,aA in next,am.Tabs do
 if aA.UIElements.TabItem.Frame.UIListLayout then
 
-local aB=aA.UIElements.TabItem.Frame.UIListLayout.AbsoluteContentSize.X
-ay=math.max(ay,aB)
+ay=math.max(ay,aA.UIElements.TabItem.Frame.UIListLayout.AbsoluteContentSize.X)
 end
 end
 end
@@ -6664,7 +6739,7 @@ an.DropdownFrame=a.load'z'{
 Title=an.Title,
 Desc=an.Desc,
 Parent=am.Parent,
-TextOffset=an.Width,
+TextOffset=an.Callback and an.Width or 20,
 Hover=not an.Callback and true or false,
 Tab=am.Tab,
 Index=am.Index,
