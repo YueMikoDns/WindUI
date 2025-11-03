@@ -33,10 +33,11 @@ jobs:
         run: aftman install
 
       - name: Run build
-        run: sh build/build.sh build
+        run: npm run build
 
       - name: Upload main.lua
         uses: actions/upload-artifact@v4
         with:
           name: main.lua
           path: dist/main.lua
+          compression-level: 0
