@@ -484,7 +484,7 @@ m.UpdateLang()
 end
 
 function m.Icon(p,r)
-return j.Icon(p,nil,not r)
+return j.Icon(p,nil,r~=false)
 end
 
 function m.AddIcons(p,r)
@@ -9834,9 +9834,9 @@ Active=false,
 },{
 aj("ImageLabel",{
 Size=UDim2.new(0,70,0,70),
-Image=ai.Icon("expand",true),
-
-
+Image=ai.Icon"expand"[1],
+ImageRectOffset=ai.Icon"expand"[2].ImageRectPosition,
+ImageRectSize=ai.Icon"expand"[2].ImageRectSize,
 BackgroundTransparency=1,
 Position=UDim2.new(0.5,0,0.5,0),
 AnchorPoint=Vector2.new(0.5,0.5),
