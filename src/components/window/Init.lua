@@ -160,7 +160,7 @@ return function(Config)
     }, {
         New("ImageLabel", {
             Size = UDim2.new(0,70,0,70),
-            Image = Creator.Icon("expand"),  
+            Image = Creator.Icon("expand", true),  
             --ImageRectOffset = Creator.Icon("expand")[2].ImageRectPosition,
             --ImageRectSize = Creator.Icon("expand")[2].ImageRectSize,
             BackgroundTransparency = 1,
