@@ -483,8 +483,8 @@ m.Language=p
 m.UpdateLang()
 end
 
-function m.Icon(p)
-return j.Icon(p,nil,true)
+function m.Icon(p,r)
+return j.Icon(p,nil,not r)
 end
 
 function m.AddIcons(p,r)
@@ -9834,7 +9834,7 @@ Active=false,
 },{
 aj("ImageLabel",{
 Size=UDim2.new(0,70,0,70),
-Image=ai.Icon"expand",
+Image=ai.Icon("expand",true),
 
 
 BackgroundTransparency=1,
