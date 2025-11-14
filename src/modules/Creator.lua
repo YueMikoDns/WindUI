@@ -420,7 +420,7 @@ function Creator.SetLanguage(lang)
 end
 
 function Creator.Icon(Icon)
-    return Icons.Icon(Icon)
+    return Icons.Icon(Icon, nil, true)
 end
 
 function Creator.AddIcons(packName, iconsData)
