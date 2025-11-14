@@ -5,10 +5,10 @@ local New = Creator.New
 local Tween = Creator.Tween
 
 
-function Checkbox.New(Value, Icon, Parent, Callback, Config)
+function Checkbox.New(Value, Icon, IconSize, Parent, Callback, Config)
     local Checkbox = {}
     
-    Icon = Icon or "check"
+    Icon = Icon or "sfsymbols:checkmark"
     
     local Radius = 9
     
@@ -22,7 +22,7 @@ function Checkbox.New(Value, Icon, Parent, Callback, Config)
         false, 
         "CheckboxIcon"
     )
-    IconCheckboxFrame.Size = UDim2.new(1,-6,1,-6)
+    IconCheckboxFrame.Size = UDim2.new(1,-26+IconSize,1,-26+IconSize)
     IconCheckboxFrame.AnchorPoint = Vector2.new(0.5,0.5)
     IconCheckboxFrame.Position = UDim2.new(0.5,0,0.5,0)
     
