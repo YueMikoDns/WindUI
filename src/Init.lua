@@ -101,6 +101,12 @@ ProtectGui(WindUI.DropdownGui)
 
 Creator.Init(WindUI)
 
+
+function WindUI:SetParent(parent)
+    WindUI.ScreenGui.Parent = Parent
+    WindUI.NotificationGui.Parent = Parent
+    WindUI.DropdownGui.Parent = Parent
+end
 math.clamp(WindUI.TransparencyValue, 0, 1)
 
 local Holder = WindUI.NotificationModule.Init(WindUI.NotificationGui)
