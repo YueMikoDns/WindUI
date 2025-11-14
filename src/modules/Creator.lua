@@ -419,8 +419,8 @@ function Creator.SetLanguage(lang)
     Creator.UpdateLang()
 end
 
-function Creator.Icon(Icon)
-    return Icons.Icon(Icon, nil, true)
+function Creator.Icon(Icon, formatdefault)
+    return Icons.Icon(Icon, nil, not formatdefault)
 end
 
 function Creator.AddIcons(packName, iconsData)
