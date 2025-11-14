@@ -5,11 +5,11 @@ local New = Creator.New
 local Tween = Creator.Tween
 
 
-function Toggle.New(Value, Icon, Parent, Callback, NewElement)
+function Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement)
     local Toggle = {}
     
     
-    local Radius = 26/2
+    local Radius = 24/2
     local IconToggleFrame
     if Icon and Icon ~= "" then
         IconToggleFrame = New("ImageLabel", {
@@ -25,13 +25,21 @@ function Toggle.New(Value, Icon, Parent, Callback, NewElement)
         })
     end
     
+    local ToggleContainer = New("Frame", {
+        Size = UDim2.new(0,2,0,26),
+        BackgroundTransparency = 1,
+        Parent = Parent,
+    })
+    
     local ToggleFrame = Creator.NewRoundFrame(Radius, "Squircle",{
         ImageTransparency = .85,
         ThemeTag = {
             ImageColor3 = "Text"
         },
-        Parent = Parent,
-        Size = UDim2.new(0,NewElement and (26+26+4) or (26*1.6),0,26),
+        Parent = ToggleContainer,
+        Size = UDim2.new(0,NewElement and (24+24+4) or (24*1.6),0,24),
+        AnchorPoint = Vector2.new(1,0.5),
+        Position = UDim2.new(0,0,0.5,0),
     }, {
         Creator.NewRoundFrame(Radius, "Squircle", {
             Size = UDim2.new(1,0,1,0),
@@ -58,7 +66,7 @@ function Toggle.New(Value, Icon, Parent, Callback, NewElement)
         
         --bar
         Creator.NewRoundFrame(Radius, "Squircle", {
-            Size = UDim2.new(0,NewElement and 32 or 22,0,22),
+            Size = UDim2.new(0,NewElement and 30 or 20,0,20),
             Position = UDim2.new(0,2,0.5,0),
             AnchorPoint = Vector2.new(0,0.5),
             ImageTransparency = 0,
@@ -76,7 +84,7 @@ function Toggle.New(Value, Icon, Parent, Callback, NewElement)
     function Toggle:Set(Toggled, isCallback)
         if Toggled then
             Tween(ToggleFrame.Frame, 0.15, {
-                Position = UDim2.new(1, -(NewElement and 32 or 22) - 2, 0.5, 0),
+                Position = UDim2.new(1, -(NewElement and 30 or 20) - 2, 0.5, 0),
                 --Size = UDim2.new(0,20,0,20),
             }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
             Tween(ToggleFrame.Layer, 0.1, {
@@ -94,7 +102,7 @@ function Toggle.New(Value, Icon, Parent, Callback, NewElement)
         else
             Tween(ToggleFrame.Frame, 0.15, {
                 Position = UDim2.new(0, 2, 0.5, 0),
-                --Size = UDim2.new(0,22,0,22),
+                --Size = UDim2.new(0,20,0,20),
             }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
             Tween(ToggleFrame.Layer, 0.1, {
                 ImageTransparency = 1,
@@ -121,7 +129,7 @@ function Toggle.New(Value, Icon, Parent, Callback, NewElement)
         --Toggled = not Toggled
     end
     
-    return ToggleFrame, Toggle
+    return ToggleContainer, Toggle
 end
 
 
