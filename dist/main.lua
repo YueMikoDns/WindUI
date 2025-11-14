@@ -4,7 +4,7 @@
     | |/ |/ / / _ \/ _  / /_/ // /  
     |__/|__/_/_//_/\_,_/\____/___/
     
-    v1.6.61  |  2025-11-03  |  Roblox UI Library for scripts
+    v1.6.61  |  2025-11-14  |  Roblox UI Library for scripts
     
     To view the source code, see the `src/` folder on the official GitHub repository.
     
@@ -484,7 +484,7 @@ m.UpdateLang()
 end
 
 function m.Icon(p)
-return j.Icon(p)
+return j.Icon(p,nil,true)
 end
 
 function m.AddIcons(p,r)
@@ -9834,9 +9834,9 @@ Active=false,
 },{
 aj("ImageLabel",{
 Size=UDim2.new(0,70,0,70),
-Image=ai.Icon"expand"[1],
-ImageRectOffset=ai.Icon"expand"[2].ImageRectPosition,
-ImageRectSize=ai.Icon"expand"[2].ImageRectSize,
+Image=ai.Icon"expand",
+
+
 BackgroundTransparency=1,
 Position=UDim2.new(0.5,0,0.5,0),
 AnchorPoint=Vector2.new(0.5,0.5),
