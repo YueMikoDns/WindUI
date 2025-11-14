@@ -3,7 +3,10 @@ local New = Creator.New
 local NewRoundFrame = Creator.NewRoundFrame
 local Tween = Creator.Tween
 
-local UserInputService = game:GetService("UserInputService")
+local cloneref = (cloneref or clonereference or function(instance) return instance end)
+
+
+local UserInputService = cloneref(game:GetService("UserInputService"))
 
 
 local function Color3ToHSB(color)

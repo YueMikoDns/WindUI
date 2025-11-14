@@ -32,12 +32,15 @@ WindUI:Popup({
     }
 })
 
+
+
 -- */  Window  /* --
 local Window = WindUI:CreateWindow({
     Title = ".ftgs hub  |  WindUI Example",
     Author = "by .ftgs • Footagesus",
     Folder = "ftgshub",
-    Icon = "bird",
+    Icon = "sfsymbols:appleLogo",
+    IconSize = 22*2,
     NewElements = true,
     --Size = UDim2.fromOffset(700,700),
     
@@ -800,7 +803,7 @@ do
     local InviteCode = "ftgs-development-hub-1300692552005189632"
     local DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
 
-    local Response = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
+    local Response = WindUI.cloneref(game:GetService("HttpService")):JSONDecode(WindUI.Creator.Request({
         Url = DiscordAPI,
         Method = "GET",
         Headers = {

@@ -17,11 +17,20 @@ local WindUI = {
     Services = require("./utils/services/Init"),
     
     OnThemeChangeFunction = nil,
+    
+    cloneref = nil,
 }
 
 
-local HttpService = game:GetService("HttpService")
+local cloneref = (cloneref or clonereference or function(instance) return instance end)
 
+WindUI.cloneref = cloneref
+
+local HttpService = cloneref(game:GetService("HttpService"))
+local Players = cloneref(game:GetService("Players"))
+local CoreGui= cloneref(game:GetService("CoreGui"))
+
+local LocalPlayer = Players.LocalPlayer or nil
 
 local Package = HttpService:JSONDecode(require("../build/package"))
 if Package then
@@ -41,11 +50,10 @@ local Tween = Creator.Tween
 
 local Acrylic = require("./utils/Acrylic/Init")
 
-local LocalPlayer = game:GetService("Players") and game:GetService("Players").LocalPlayer or nil
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or function() end
 
-local GUIParent = gethui and gethui() or (game.CoreGui or game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+local GUIParent = gethui and gethui() or (CoreGui or game.Players.LocalPlayer:WaitForChild("PlayerGui"))
 
 
 WindUI.ScreenGui = New("ScreenGui", {
@@ -254,7 +262,7 @@ function WindUI:CreateWindow(Config)
     
     
     local hwid = gethwid or function()
-        return game:GetService("Players").LocalPlayer.UserId
+        return Players.LocalPlayer.UserId
     end
     
     local Filename = hwid()

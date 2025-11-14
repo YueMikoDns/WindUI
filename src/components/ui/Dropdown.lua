@@ -1,8 +1,10 @@
 local DropdownMenu = {}
 
-local UserInputService = game:GetService("UserInputService")
-local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
-local Camera = game:GetService("Workspace").CurrentCamera
+local cloneref = (cloneref or clonereference or function(instance) return instance end)
+
+local UserInputService = cloneref(game:GetService("UserInputService"))
+local Mouse = cloneref(game:GetService("Players")).LocalPlayer:GetMouse()
+local Camera = cloneref(game:GetService("Workspace")).CurrentCamera
 
 local CurrentCamera = workspace.CurrentCamera
 
