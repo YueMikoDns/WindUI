@@ -281,14 +281,27 @@ function WindUI:CreateWindow(Config)
         end
     
         local keyPath = (Config.Folder or "Temp") .. "/" .. Filename .. ".key"
-    
-        if not Config.KeySystem.API then
+        
+        if Config.KeySystem.KeyValidator then
+            if Config.KeySystem.SaveKey and isfile(keyPath) then
+                local savedKey = readfile(keyPath)
+                local isValid = Config.KeySystem.KeyValidator(savedKey)
+                
+                if isValid then
+                    CanLoadWindow = true
+                else
+                    loadKeysystem()
+                end
+            else
+                loadKeysystem()
+            end
+        elseif not Config.KeySystem.API then
             if Config.KeySystem.SaveKey and isfile(keyPath) then
                 local savedKey = readfile(keyPath)
                 local isKey = (type(Config.KeySystem.Key) == "table")
                     and table.find(Config.KeySystem.Key, savedKey)
                     or tostring(Config.KeySystem.Key) == tostring(savedKey)
-    
+                    
                 if isKey then
                     CanLoadWindow = true
                 else
@@ -301,7 +314,7 @@ function WindUI:CreateWindow(Config)
             if isfile(keyPath) then
                 local fileKey = readfile(keyPath)
                 local isSuccess = false
-    
+                 
                 for _, i in next, Config.KeySystem.API do
                     local serviceData = WindUI.Services[i.Type]
                     if serviceData then
@@ -309,7 +322,7 @@ function WindUI:CreateWindow(Config)
                         for _, argName in next, serviceData.Args do
                             table.insert(args, i[argName])
                         end
-    
+                        
                         local service = serviceData.New(table.unpack(args))
                         local success = service.Verify(fileKey)
                         if success then
@@ -318,14 +331,14 @@ function WindUI:CreateWindow(Config)
                         end
                     end
                 end
-    
+                    
                 CanLoadWindow = isSuccess
                 if not isSuccess then loadKeysystem() end
             else
                 loadKeysystem()
             end
         end
-    
+        
         repeat task.wait() until CanLoadWindow
     end
 
