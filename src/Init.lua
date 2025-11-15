@@ -103,9 +103,9 @@ Creator.Init(WindUI)
 
 
 function WindUI:SetParent(parent)
-    WindUI.ScreenGui.Parent = Parent
-    WindUI.NotificationGui.Parent = Parent
-    WindUI.DropdownGui.Parent = Parent
+    WindUI.ScreenGui.Parent = parent
+    WindUI.NotificationGui.Parent = parent
+    WindUI.DropdownGui.Parent = parent
 end
 math.clamp(WindUI.TransparencyValue, 0, 1)
 
