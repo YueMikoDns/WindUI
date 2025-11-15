@@ -58,6 +58,14 @@ local Window = WindUI:CreateWindow({
             Color3.fromHex("#30FF6A"), 
             Color3.fromHex("#e7ff2f")
         )
+    },
+    
+    KeySystem = {
+        Title = "Key System Example  |  WindUI Example",
+        Note = "Key System. Key: 1234",
+        KeyValidator = function(EnteredKey)
+            return EnteredKey == "1234" -- if key == "1234" then return true else return false end
+        end
     }
 })
 
