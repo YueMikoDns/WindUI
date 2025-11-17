@@ -11804,8 +11804,8 @@ aa:SetLanguage(ao.Language)
 function aa.CreateWindow(av,aw)
 local ax=a.load'X'
 
-if not isfolder"WindUI"then
-makefolder"WindUI"
+if not isfolder"NextPhase"then
+makefolder"NextPhase"
 end
 if aw.Folder then
 makefolder(aw.Folder)
