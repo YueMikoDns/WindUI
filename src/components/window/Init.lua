@@ -88,6 +88,8 @@ return function(Config)
         ElementConfig = {},
         
         PendingFlags = {},
+        
+        IsToggleDragging = false,
     }
     
     Window.UICorner = Window.Radius
