@@ -42,6 +42,7 @@ return {
     DialogIcon = "Icon",
     
     Toggle = "Button",
+    ToggleBar = "White",
     
     Checkbox = "Button",
     CheckboxIcon = "White",
