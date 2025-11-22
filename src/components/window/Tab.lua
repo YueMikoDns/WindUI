@@ -364,9 +364,9 @@ function TabModule.New(Config, UIScale)
     
 	-- yo
 	
-    Tab.ElementsModule = require("../../elements/Init")
+    local ElementsModule = require("../../elements/Init")
     
-    Tab.ElementsModule.Load(Tab, Tab.UIElements.ContainerFrame, Tab.ElementsModule.Elements, Window, WindUI, nil, Tab.ElementsModule, UIScale)
+    ElementsModule.Load(Tab, Tab.UIElements.ContainerFrame, ElementsModule.Elements, Window, WindUI, nil, ElementsModule, UIScale)
     
     
     
