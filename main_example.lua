@@ -77,7 +77,7 @@ do
     Window:Tag({
         Title = "v" .. WindUI.Version,
         Icon = "github",
-        Color = Color3.fromHex("#6b31ff")
+        Color = Color3.fromHex("#1c1c1c")
     })
 end
 
@@ -326,25 +326,35 @@ local OtherSection = Window:Section({
 })
 
 
--- */ Using Nebula Icons /* --
-do
-    local NebulaIcons = loadstring(game:HttpGetAsync("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
-    
-    -- Adding icons (e.g. Fluency)
-    WindUI.Creator.AddIcons("fluency",    NebulaIcons.Fluency)
-    --               ^ Icon name          ^ Table of Icons
-    
-    -- You can also add nebula icons
-    WindUI.Creator.AddIcons("nebula",    NebulaIcons.nebulaIcons)
-    
-    -- Usage ↑ ↓
-    
-    local TestSection = Window:Section({
-        Title = "Custom icons usage test (nebula)",
-        Icon = "nebula:nebula",
-    })
-end
 
+
+-- */  Overview Tab  /* --
+do
+    local OverviewTab = ElementsSection:Tab({
+        Title = "Overview",
+        Icon = "chart-no-axes-gantt"
+    })
+    
+    local OverviewSection1 = OverviewTab:Section({
+        Title = "Group's Example"
+    })
+    
+    local OverviewGroup1 = OverviewTab:Group({})
+    
+    OverviewGroup1:Button({ Title = "Button 1", Justify = "Center", Icon = "", Callback = function() print("clicked button 1") end })
+    OverviewGroup1:Space()
+    OverviewGroup1:Button({ Title = "Button 2", Justify = "Center", Icon = "", Callback = function() print("clicked button 2") end })
+    
+    OverviewTab:Space()
+    
+    local OverviewGroup2 = OverviewTab:Group({})
+    
+    OverviewGroup2:Button({ Title = "Button 1", Justify = "Center", Icon = "", Callback = function() print("clicked button 1") end })
+    OverviewGroup2:Space()
+    OverviewGroup2:Toggle({ Title = "Toggle 2",  Callback = function(v) print("clicked toggle 2:", v) end })
+    OverviewGroup2:Space()
+    OverviewGroup2:Colorpicker({ Title = "Colorpicker 3", Default = Color3.fromHex("#30ff6a"), Callback = function(color) print(color) end })
+end
 
 
 -- */  Toggle Tab  /* --
@@ -365,6 +375,13 @@ do
         Title = "Toggle",
         Desc = "Toggle example"
     })
+    
+    ToggleTab:Space()
+    
+    local ToggleGroup1 = ToggleTab:Group()
+    ToggleGroup1:Toggle({})
+    ToggleGroup1:Space()
+    ToggleGroup1:Toggle({})
     
     ToggleTab:Space()
     
@@ -752,10 +769,22 @@ do -- config panel
         end
     })
 
+    ConfigTab:Space()
+    
+    local AutoLoadToggle = ConfigTab:Toggle({
+        Title = "Enable Auto Load to Selected Config",
+        Value = false,
+        Callback = function(v)
+            Window.CurrentConfig:SetAutoLoad(v)
+        end
+    })
+
+    ConfigTab:Space()
+
     local AllConfigs = ConfigManager:AllConfigs()
     local DefaultValue = table.find(AllConfigs, ConfigName) and ConfigName or nil
 
-    ConfigTab:Dropdown({
+    local AllConfigsDropdown = ConfigTab:Dropdown({
         Title = "All Configs",
         Desc = "Select existing configs",
         Values = AllConfigs,
@@ -763,6 +792,8 @@ do -- config panel
         Callback = function(value)
             ConfigName = value
             ConfigNameInput:Set(value)
+            
+            AutoLoadToggle:Set(ConfigManager:GetConfig(ConfigName).AutoLoad or false)
         end
     })
 
@@ -773,7 +804,7 @@ do -- config panel
         Icon = "",
         Justify = "Center",
         Callback = function()
-            Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+            Window.CurrentConfig = ConfigManager:Config(ConfigName)
             if Window.CurrentConfig:Save() then
                 WindUI:Notify({
                     Title = "Config Saved",
@@ -781,6 +812,8 @@ do -- config panel
                     Icon = "check",
                 })
             end
+            
+            AllConfigsDropdown:Refresh(ConfigManager:AllConfigs())
         end
     })
 
@@ -799,6 +832,17 @@ do -- config panel
                     Icon = "refresh-cw",
                 })
             end
+        end
+    })
+
+    ConfigTab:Space()
+
+    ConfigTab:Button({
+        Title = "Print AutoLoad Configs",
+        Icon = "",
+        Justify = "Center",
+        Callback = function()
+            print(HttpService:JSONDecode(ConfigManager:GetAutoLoadConfigs()))
         end
     })
 end
@@ -847,4 +891,25 @@ do
         })
         
     end
+end
+
+
+
+-- */ Using Nebula Icons /* --
+do
+    local NebulaIcons = loadstring(game:HttpGetAsync("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
+    
+    -- Adding icons (e.g. Fluency)
+    WindUI.Creator.AddIcons("fluency",    NebulaIcons.Fluency)
+    --               ^ Icon name          ^ Table of Icons
+    
+    -- You can also add nebula icons
+    WindUI.Creator.AddIcons("nebula",    NebulaIcons.nebulaIcons)
+    
+    -- Usage ↑ ↓
+    
+    local TestSection = Window:Section({
+        Title = "Custom icons usage test (nebula)",
+        Icon = "nebula:nebula",
+    })
 end
