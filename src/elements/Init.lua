@@ -13,6 +13,7 @@ return {
         Divider     = require("./Divider"),
         Space       = require("./Space"),
         Image       = require("./Image"),
+        Group       = require("./Group"),
         --Video       = require("./Video"),
     },
     Load = function(tbl, Container, Elements, Window, WindUI, OnElementCreateFunction, ElementsModule, UIScale, Tab)
@@ -20,6 +21,7 @@ return {
             tbl[name] = function(self, config)
                 config = config or {}
                 config.Tab = Tab or tbl
+                config.ParentType = tbl.__type
                 config.ParentTable = tbl
                 config.Index = #tbl.Elements + 1
                 config.GlobalIndex = #Window.AllElements + 1
@@ -99,7 +101,7 @@ return {
                 end
                 
                 if OnElementCreateFunction then
-                    OnElementCreateFunction()
+                    OnElementCreateFunction(content, tbl.Elements)
                 end
                 return content
             end

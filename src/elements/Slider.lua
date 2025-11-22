@@ -138,7 +138,8 @@ function Element:New(Config)
         Slider:Lock()
     end
     
-    local ScrollingFrameParent = Slider.SliderFrame.Parent:IsA("ScrollingFrame") and Slider.SliderFrame.Parent or Slider.SliderFrame.Parent.Parent.Parent
+    --local ScrollingFrameParent = Slider.SliderFrame.Parent:IsA("ScrollingFrame") and Slider.SliderFrame.Parent or Slider.SliderFrame.Parent.Parent.Parent
+    local ScrollingFrameParent = Config.Tab.UIElements.ContainerFrame
     
     function Slider:Set(Value, input)
         if CanCallback then
