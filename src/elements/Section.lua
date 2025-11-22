@@ -224,6 +224,12 @@ function Element:New(Config)
         end
     end)
     
+    Creator.AddSignal(Main.Content.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+        if Section.Opened then
+            Section:Open()
+        end
+    end)
+    
     task.spawn(function()
         task.wait(0.02)
         if Section.Expandable then

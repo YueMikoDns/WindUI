@@ -64,7 +64,7 @@ function Element:New(Config)
     
     local ToggleFrame, ToggleFunc
     if Toggle.Type == "Toggle" then
-        ToggleFrame, ToggleFunc = CreateToggle(Toggled, Toggle.Icon, Toggle.IconSize, Toggle.ToggleFrame.UIElements.Main, Toggle.Callback, Config.Window.NewElements)
+        ToggleFrame, ToggleFunc = CreateToggle(Toggled, Toggle.Icon, Toggle.IconSize, Toggle.ToggleFrame.UIElements.Main, Toggle.Callback, Config.Window.NewElements, Config)
     elseif Toggle.Type == "Checkbox" then
         ToggleFrame, ToggleFunc = CreateCheckbox(Toggled, Toggle.Icon, Toggle.IconSize, Toggle.ToggleFrame.UIElements.Main, Toggle.Callback, Config)
     else
@@ -73,20 +73,35 @@ function Element:New(Config)
 
     ToggleFrame.AnchorPoint = Vector2.new(1,Config.Window.NewElements and 0 or 0.5)
     ToggleFrame.Position = UDim2.new(1,0,Config.Window.NewElements and 0 or 0.5,0)
-        
-    function Toggle:Set(v, isCallback)
+    
+    function Toggle:Set(v, isCallback, isAnim)
         if CanCallback then
-            ToggleFunc:Set(v, isCallback)
+            ToggleFunc:Set(v, isCallback, isAnim or false)
             Toggled = v
             Toggle.Value = v
         end
     end
 
-    Toggle:Set(Toggled, false)
+    Toggle:Set(Toggled, false, Config.Window.NewElements)
 
-    Creator.AddSignal(Toggle.ToggleFrame.UIElements.Main.MouseButton1Click, function()
-        Toggle:Set(not Toggled)
-    end)
+
+    if Config.Window.NewElements and ToggleFunc.Animate then
+        Creator.AddSignal(Toggle.ToggleFrame.UIElements.Main.InputBegan, function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                ToggleFunc:Animate(input, Toggle)
+            end
+        end)
+    
+        -- Creator.AddSignal(Toggle.ToggleFrame.UIElements.Main.InputEnded, function(input)
+        --     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        --         ToggleFunc:Animate(input, true, Toggle)
+        --     end
+        -- end)
+    else
+        Creator.AddSignal(Toggle.ToggleFrame.UIElements.Main.MouseButton1Click, function()
+            Toggle:Set(not Toggle.Value, nil, Config.Window.NewElements)
+        end)
+    end
     
     return Toggle.__type, Toggle
 end
