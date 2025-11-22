@@ -195,7 +195,7 @@ end
 
 function Creator.SetTheme(Theme)
     Creator.Theme = Theme
-    Creator.UpdateTheme(nil, true)
+    Creator.UpdateTheme(nil, false)
 end
 
 function Creator.AddFontObject(Object)
