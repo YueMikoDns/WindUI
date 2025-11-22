@@ -62,6 +62,7 @@ function Element:New(Config)
         Index = Config.Index,
         Window = Config.Window,
         ElementTable = Slider,
+        ParentConfig = Config,
     })
     
     Slider.UIElements.SliderIcon = Creator.NewRoundFrame(99, "Squircle", {

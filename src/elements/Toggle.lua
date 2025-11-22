@@ -29,11 +29,12 @@ function Element:New(Config)
         -- ThumbnailSize = Config.ThumbnailSize,
         Window = Config.Window,
         Parent = Config.Parent,
-        TextOffset = 44,
+        TextOffset = (24+24+4),
         Hover = false,
         Tab = Config.Tab,
         Index = Config.Index,
         ElementTable = Toggle,
+        ParentConfig = Config,
     })
     
     local CanCallback = true

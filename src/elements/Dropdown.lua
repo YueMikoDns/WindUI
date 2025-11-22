@@ -62,6 +62,7 @@ function Element:New(Config)
         Index = Config.Index,
         Window = Config.Window,
         ElementTable = Dropdown,
+        ParentConfig = Config,
     })
     
     
