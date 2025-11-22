@@ -17,8 +17,8 @@ local CreateButton = require("../components/ui/Button").New
 local CreateInput = require("../components/ui/Input").New
 
 local Element = {
-    UICorner = 8,
-    UIPadding = 8
+    UICorner = 9,
+    --UIPadding = 8
 }
 
 function Element:Colorpicker(Config, Window, OnApply)
@@ -645,7 +645,7 @@ function Element:New(Config)
     
     local CanCallback = true
     
-    if Config.Window.NewElements then Element.UICorner = 14 end
+    --if Config.Window.NewElements then Element.UICorner = 14 end
     
     Colorpicker.ColorpickerFrame = require("../components/window/Element")({
         Title = Colorpicker.Title,
@@ -665,7 +665,7 @@ function Element:New(Config)
         Active = true,
         ImageColor3 = Colorpicker.Default,
         Parent = Colorpicker.ColorpickerFrame.UIElements.Main,
-        Size = UDim2.new(0,30,0,30),
+        Size = UDim2.new(0,26,0,26),
         AnchorPoint = Vector2.new(1,0),
         Position = UDim2.new(1,0,0,0),
         ZIndex = 2
