@@ -647,6 +647,7 @@ return function(Config)
         AnchorPoint = Vector2.new(0.5,0.5),
         Active = true,
     }, {
+        Config.WindUI.UIScaleObj,
         Window.AcrylicPaint and Window.AcrylicPaint.Frame or nil,
         Blur,
         Creator.NewRoundFrame(Window.UICorner, "Squircle", {
@@ -1302,7 +1303,7 @@ return function(Config)
     
     function Window:SetUIScale(v)
         Config.WindUI.UIScale = v
-        Tween(Config.WindUI.ScreenGui.UIScale, .2, {Scale = v}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
+        Tween(Config.WindUI.UIScaleObj, .2, {Scale = v}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
         return Window
     end
     
