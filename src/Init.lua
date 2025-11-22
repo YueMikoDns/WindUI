@@ -19,6 +19,7 @@ local WindUI = {
     OnThemeChangeFunction = nil,
     
     cloneref = nil,
+    UIScaleObj = nil,
 }
 
 
@@ -55,6 +56,11 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or function() end
 
 local GUIParent = gethui and gethui() or (CoreGui or game.Players.LocalPlayer:WaitForChild("PlayerGui"))
 
+local UIScaleObj = New("UIScale", {
+    Scale = WindUI.Scale,
+})
+
+WindUI.UIScaleObj = UIScaleObj
 
 WindUI.ScreenGui = New("ScreenGui", {
     Name = "WindUI",
@@ -62,9 +68,7 @@ WindUI.ScreenGui = New("ScreenGui", {
     IgnoreGuiInset = true,
     ScreenInsets = "None",
 }, {
-    New("UIScale", {
-        Scale = WindUI.Scale,
-    }),
+    
     New("Folder", {
         Name = "Window"
     }),
