@@ -4,7 +4,7 @@
     | |/ |/ / / _ \/ _  / /_/ // /  
     |__/|__/_/_//_/\_,_/\____/___/
     
-    v1.6.62  |  2025-11-22  |  Roblox UI Library for scripts
+    v1.6.62  |  2025-11-27  |  Roblox UI Library for scripts
     
     To view the source code, see the `src/` folder on the official GitHub repository.
     
@@ -62,6 +62,9 @@ ToggleBar="White",
 
 Checkbox="Button",
 CheckboxIcon="White",
+
+Slider="Button",
+SliderThumb="White",
 }end function a.b()
 
 local b=(cloneref or clonereference or function(b)return b end)
@@ -5373,7 +5376,7 @@ local an=12
 local ao
 if ag and ag~=""then
 ao=ac("ImageLabel",{
-Size=UDim2.new(1,-7,1,-7),
+Size=UDim2.new(0,13,0,13),
 BackgroundTransparency=1,
 AnchorPoint=Vector2.new(0.5,0.5),
 Position=UDim2.new(0.5,0,0.5,0),
@@ -5482,6 +5485,14 @@ if aw then
 ad(aq.Frame,0.15,{
 Position=UDim2.new(0,au-at-2,0.5,0),
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+else
+ad(aq.Frame,0.15,{
+Position=UDim2.new(0,2,0.5,0),
+},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+end
+end
+
+if aw then
 ad(aq.Layer,0.1,{
 ImageTransparency=0,
 }):Play()
@@ -5492,9 +5503,6 @@ ImageTransparency=0,
 }):Play()
 end
 else
-ad(aq.Frame,0.15,{
-Position=UDim2.new(0,2,0.5,0),
-},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 ad(aq.Layer,0.1,{
 ImageTransparency=1,
 }):Play()
@@ -5503,7 +5511,6 @@ if ao then
 ad(ao,0.1,{
 ImageTransparency=1,
 }):Play()
-end
 end
 end
 
@@ -5565,11 +5572,18 @@ return
 end
 
 local aF=aC.Position.X-ay
-local b=math.max(2,math.min(aA+aF,au-at-2))
+local b=math.max(2,math.min(aA+aF,au-at-2))local d=
+
+(aq.Frame.Position.X.Offset-2)/(au-at-4)
 
 ad(aq.Frame,0.05,{
 Position=UDim2.new(0,b,0.5,0)
 },Enum.EasingStyle.Linear,Enum.EasingDirection.Out):Play()
+
+
+
+
+
 end
 end)
 
@@ -5599,7 +5613,8 @@ local aD=aq.Frame.Position.X.Offset
 local aE=math.abs(aC.Position.X-ay)
 
 if aE<10 then
-ax:Set(not ax.Value,true,false)
+local aF=not ax.Value
+ax:Set(aF,true,false)
 else
 local aF=aD+at/2
 local b=au/2
@@ -5849,7 +5864,7 @@ UIElements={},
 IsFocusing=false,
 
 Width=130,
-TextBoxWidth=30,
+TextBoxWidth=ai.Window.NewElements and 40 or 30,
 ThumbSize=13,
 }
 local ak
@@ -5867,7 +5882,7 @@ local function FormatValue(as)
 if ar then
 return string.format("%.2f",as)
 else
-return tostring(math.floor(as+0.5))
+return tonumber(math.floor(as+0.5))
 end
 end
 
@@ -5905,7 +5920,7 @@ Name="Frame",
 Size=UDim2.new(ap,0,1,0),
 ImageTransparency=.1,
 ThemeTag={
-ImageColor3="Button",
+ImageColor3="Slider",
 },
 },{
 aa.NewRoundFrame(99,"Squircle",{
@@ -5913,9 +5928,30 @@ Size=UDim2.new(0,ai.Window.NewElements and(aj.ThumbSize*1.75)or(aj.ThumbSize+2),
 Position=UDim2.new(1,0,0.5,0),
 AnchorPoint=Vector2.new(0.5,0.5),
 ThemeTag={
-ImageColor3="Text",
+ImageColor3="SliderThumb",
 },
 Name="Thumb",
+},{
+aa.NewRoundFrame(99,"SquircleOutline2",{
+Size=UDim2.new(1,0,1,0),
+ImageColor3=Color3.new(1,1,1),
+Name="Highlight",
+ImageTransparency=.45,
+},{
+ac("UIGradient",{
+Rotation=60,
+Color=ColorSequence.new{
+ColorSequenceKeypoint.new(0.0,Color3.fromRGB(255,255,255)),
+ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,255,255)),
+ColorSequenceKeypoint.new(1.0,Color3.fromRGB(255,255,255)),
+},
+Transparency=NumberSequence.new{
+NumberSequenceKeypoint.new(0.0,0.1),
+NumberSequenceKeypoint.new(0.5,1),
+NumberSequenceKeypoint.new(1.0,0.1),
+}
+}),
+}),
 })
 })
 })
@@ -5923,7 +5959,7 @@ Name="Thumb",
 aj.UIElements.SliderContainer=ac("Frame",{
 Size=UDim2.new(0,aj.Width,0,0),
 AutomaticSize="Y",
-Position=UDim2.new(1,ai.Window.NewElements and-20 or 0,0.5,0),
+Position=UDim2.new(1,ai.Window.NewElements and-16 or 0,0.5,0),
 AnchorPoint=Vector2.new(1,0.5),
 BackgroundTransparency=1,
 Parent=aj.SliderFrame.UIElements.Main,
@@ -6001,6 +6037,7 @@ ao=au
 aa.SafeCallback(aj.Callback,FormatValue(au))
 end
 end)
+
 am=ae(game:GetService"UserInputService").InputEnded:Connect(function(ax)
 if(ax.UserInputType==Enum.UserInputType.MouseButton1 or ax.UserInputType==Enum.UserInputType.Touch)and av==ax then
 al:Disconnect()
@@ -6008,7 +6045,7 @@ am:Disconnect()
 ag=false
 as.ScrollingEnabled=true
 
-ad(aj.UIElements.SliderIcon.Frame.Thumb,.2,{Size=UDim2.new(0,ai.Window.NewElements and(aj.ThumbSize*1.75)or(aj.ThumbSize+2),0,aj.ThumbSize+2)},Enum.EasingStyle.Quint,Enum.EasingDirection.InOut):Play()
+ad(aj.UIElements.SliderIcon.Frame.Thumb,.2,{ImageTransparency=0,Size=UDim2.new(0,ai.Window.NewElements and(aj.ThumbSize*1.75)or(aj.ThumbSize+2),0,aj.ThumbSize+2)},Enum.EasingStyle.Quint,Enum.EasingDirection.InOut):Play()
 end
 end)
 end
@@ -6055,7 +6092,8 @@ aa.AddSignal(aj.UIElements.SliderContainer.InputBegan,function(at)
 aj:Set(an,at)
 
 if at.UserInputType==Enum.UserInputType.MouseButton1 or at.UserInputType==Enum.UserInputType.Touch then
-ad(aj.UIElements.SliderIcon.Frame.Thumb,.24,{Size=UDim2.new(0,(ai.Window.NewElements and(aj.ThumbSize*1.75)or(aj.ThumbSize))+8,0,aj.ThumbSize+8)},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+
+ad(aj.UIElements.SliderIcon.Frame.Thumb,.24,{ImageTransparency=.85,Size=UDim2.new(0,(ai.Window.NewElements and(aj.ThumbSize*1.75)or(aj.ThumbSize))+8,0,aj.ThumbSize+8)},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
 end)
 
@@ -8394,8 +8432,8 @@ Text="",
 Name="Top",
 },{
 al.Box and ae("UIPadding",{
-PaddingLeft=UDim.new(0,ak.Window.ElementConfig.UIPadding),
-PaddingRight=UDim.new(0,ak.Window.ElementConfig.UIPadding),
+PaddingLeft=UDim.new(0,ak.Window.ElementConfig.UIPadding+(ak.Window.NewElements and 4 or 0)),
+PaddingRight=UDim.new(0,ak.Window.ElementConfig.UIPadding+(ak.Window.NewElements and 4 or 0)),
 })or nil,
 am,
 ao,
@@ -8432,6 +8470,7 @@ VerticalAlignment="Top",
 
 
 
+al.ElementFrame=ap
 
 
 local aq=ak.ElementsModule
@@ -8470,7 +8509,7 @@ function al.Open(ar)
 if al.Expandable then
 al.Opened=true
 af(ap,0.33,{
-Size=UDim2.new(1,0,0,al.HeaderSize+(ap.Content.AbsoluteSize.Y/ak.UIScale))
+Size=UDim2.new(ap.Size.X.Scale,ap.Size.X.Offset,0,al.HeaderSize+(ap.Content.AbsoluteSize.Y/ak.UIScale))
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 
 af(an.ImageLabel,0.1,{Rotation=180},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
@@ -8480,7 +8519,7 @@ function al.Close(ar)
 if al.Expandable then
 al.Opened=false
 af(ap,0.26,{
-Size=UDim2.new(1,0,0,al.HeaderSize)
+Size=UDim2.new(ap.Size.X.Scale,ap.Size.X.Offset,0,al.HeaderSize)
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 af(an.ImageLabel,0.1,{Rotation=0},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
@@ -8513,7 +8552,7 @@ if al.Expandable then
 
 
 
-ap.Size=UDim2.new(1,0,0,al.HeaderSize)
+ap.Size=UDim2.new(ap.Size.X.Scale,ap.Size.X.Offset,0,al.HeaderSize)
 ap.AutomaticSize="None"
 ap.Top.Size=UDim2.new(1,0,0,al.HeaderSize)
 ap.Top.AutomaticSize="None"
@@ -8632,7 +8671,7 @@ Parent=aj.Parent,
 ae("UIListLayout",{
 FillDirection="Horizontal",
 HorizontalAlignment="Center",
-VerticalAlignment="Center",
+
 Padding=UDim.new(0,aj.Tab and aj.Tab.Gap or(Window.NewElements and 1 or 6))
 }),
 })
@@ -8758,8 +8797,8 @@ end
 end
 
 local av
-for aw,ax in pairs(au)do
-if typeof(ax)=="table"and aw:match"Frame$"then
+for aw,ax in next,au do
+if typeof(ax)=="table"and aw~="ElementFrame"and aw:match"Frame$"then
 av=ax
 break
 end
