@@ -13,7 +13,7 @@ function Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement, Config)
     local IconToggleFrame
     if Icon and Icon ~= "" then
         IconToggleFrame = New("ImageLabel", {
-            Size = UDim2.new(1,-7,1,-7),
+            Size = UDim2.new(0,20-7,0,20-7),
             BackgroundTransparency = 1,
             AnchorPoint = Vector2.new(0.5,0.5),
             Position = UDim2.new(0.5,0,0.5,0),
@@ -122,31 +122,35 @@ function Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement, Config)
                 Tween(ToggleFrame.Frame, 0.15, {
                     Position = UDim2.new(0, ToggleWidth - FrameWidth - 2, 0.5, 0),
                 }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
-                Tween(ToggleFrame.Layer, 0.1, {
-                    ImageTransparency = 0,
-                }):Play()
-            
-                if IconToggleFrame then 
-                    Tween(IconToggleFrame, 0.1, {
-                        ImageTransparency = 0,
-                    }):Play()
-                end
             else
                 Tween(ToggleFrame.Frame, 0.15, {
                     Position = UDim2.new(0, 2, 0.5, 0),
                 }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
-                Tween(ToggleFrame.Layer, 0.1, {
-                    ImageTransparency = 1,
-                }):Play()
-            
-                if IconToggleFrame then 
-                    Tween(IconToggleFrame, 0.1, {
-                        ImageTransparency = 1,
-                    }):Play()
-                end
             end
         end
-
+    
+        if Toggled then
+            Tween(ToggleFrame.Layer, 0.1, {
+                ImageTransparency = 0,
+            }):Play()
+        
+            if IconToggleFrame then 
+                Tween(IconToggleFrame, 0.1, {
+                    ImageTransparency = 0,
+                }):Play()
+            end
+        else
+            Tween(ToggleFrame.Layer, 0.1, {
+                ImageTransparency = 1,
+            }):Play()
+        
+            if IconToggleFrame then 
+                Tween(IconToggleFrame, 0.1, {
+                    ImageTransparency = 1,
+                }):Play()
+            end
+        end
+    
         isCallback = isCallback ~= false
         
         task.spawn(function()
@@ -207,9 +211,16 @@ function Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement, Config)
                     local mouseDelta = inputChanged.Position.X - startMouseX
                     local newX = math.max(2, math.min(startFrameX + mouseDelta, ToggleWidth - FrameWidth - 2))
                     
+                    local percent = (ToggleFrame.Frame.Position.X.Offset - 2) / (ToggleWidth - FrameWidth - 4)
+                    
                     Tween(ToggleFrame.Frame, 0.05, {
                         Position = UDim2.new(0, newX, 0.5, 0)
                     }, Enum.EasingStyle.Linear, Enum.EasingDirection.Out):Play()
+                    
+                    -- Tween(ToggleFrame.Layer, 0.05, {
+                    --     ImageTransparency = 1 - percent
+                    -- }, Enum.EasingStyle.Linear, Enum.EasingDirection.Out):Play()
+                    --ToggleFrame.Layer.ImageTransparency = 1 - percent
                 end
             end)
             
@@ -239,7 +250,8 @@ function Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement, Config)
                     local delta = math.abs(inputEnded.Position.X - startMouseX)
                     
                     if delta < 10 then
-                        ToggleObj:Set(not ToggleObj.Value, true, false)
+                        local objValue = not ToggleObj.Value
+                        ToggleObj:Set(objValue, true, false)
                     else
                         local barCenter = currentX + FrameWidth / 2
                         local toggleCenter = ToggleWidth / 2
