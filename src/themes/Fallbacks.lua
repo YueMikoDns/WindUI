@@ -46,4 +46,7 @@ return {
     
     Checkbox = "Button",
     CheckboxIcon = "White",
+    
+    Slider = "Button",
+    SliderThumb = "White",
 }

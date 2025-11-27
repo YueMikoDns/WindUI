@@ -22,7 +22,7 @@ function Element:New(Config)
         IsFocusing = false,
         
         Width = 130,
-        TextBoxWidth = 30,
+        TextBoxWidth = Config.Window.NewElements and 40 or 30,
         ThumbSize = 13,
     }
     local isTouch
@@ -40,7 +40,7 @@ function Element:New(Config)
         if IsFloat then
             return string.format("%.2f", val)
         else
-            return tostring(math.floor(val + 0.5))
+            return tonumber(math.floor(val + 0.5))
         end
     end
     
@@ -78,7 +78,7 @@ function Element:New(Config)
             Size = UDim2.new(delta, 0, 1, 0),
             ImageTransparency = .1,
             ThemeTag = {
-                ImageColor3 = "Button",
+                ImageColor3 = "Slider",
             },
         }, {
             Creator.NewRoundFrame(99, "Squircle", {
@@ -86,9 +86,30 @@ function Element:New(Config)
                 Position = UDim2.new(1, 0, 0.5, 0),
                 AnchorPoint = Vector2.new(0.5, 0.5),
                 ThemeTag = {
-                    ImageColor3 = "Text",
+                    ImageColor3 = "SliderThumb",
                 },
                 Name = "Thumb",
+            }, {
+                Creator.NewRoundFrame(99, "SquircleOutline2", {
+                    Size = UDim2.new(1,0,1,0),
+                    ImageColor3 = Color3.new(1,1,1),
+                    Name = "Highlight",
+                    ImageTransparency = .45,
+                }, {
+                    New("UIGradient", {
+                        Rotation = 60,
+                        Color = ColorSequence.new({
+                            ColorSequenceKeypoint.new(0.0, Color3.fromRGB(255, 255, 255)),
+                            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+                            ColorSequenceKeypoint.new(1.0, Color3.fromRGB(255, 255, 255)),
+                        }),
+                        Transparency = NumberSequence.new({
+                            NumberSequenceKeypoint.new(0.0, 0.1),
+                            NumberSequenceKeypoint.new(0.5, 1),
+                            NumberSequenceKeypoint.new(1.0, 0.1),
+                        })
+                    }),
+                }),
             })
         })
     })
@@ -96,7 +117,7 @@ function Element:New(Config)
     Slider.UIElements.SliderContainer = New("Frame", {
         Size = UDim2.new(0, Slider.Width, 0, 0),
         AutomaticSize = "Y",
-        Position = UDim2.new(1, Config.Window.NewElements and -12-8 or 0, 0.5, 0),
+        Position = UDim2.new(1, Config.Window.NewElements and -12-4 or 0, 0.5, 0),
         AnchorPoint = Vector2.new(1,0.5),
         BackgroundTransparency = 1,
         Parent = Slider.SliderFrame.UIElements.Main,
@@ -174,6 +195,7 @@ function Element:New(Config)
                             Creator.SafeCallback(Slider.Callback, FormatValue(Value))
                         end
                     end)
+                    -- release slider
                     releaseconnection = cloneref(game:GetService("UserInputService")).InputEnded:Connect(function(endInput)
                         if (endInput.UserInputType == Enum.UserInputType.MouseButton1 or endInput.UserInputType == Enum.UserInputType.Touch) and input == endInput then
                             moveconnection:Disconnect()
@@ -181,7 +203,7 @@ function Element:New(Config)
                             HoldingSlider = false
                             ScrollingFrameParent.ScrollingEnabled = true
                             
-                            Tween(Slider.UIElements.SliderIcon.Frame.Thumb, .2, { Size = UDim2.new(0,Config.Window.NewElements and (Slider.ThumbSize*1.75) or (Slider.ThumbSize+2),0,Slider.ThumbSize+2) }, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut):Play()
+                            Tween(Slider.UIElements.SliderIcon.Frame.Thumb, .2, { ImageTransparency = 0, Size = UDim2.new(0,Config.Window.NewElements and (Slider.ThumbSize*1.75) or (Slider.ThumbSize+2),0,Slider.ThumbSize+2) }, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut):Play()
                         end
                     end)
                 end
@@ -228,7 +250,8 @@ function Element:New(Config)
         Slider:Set(Value, input)
         
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            Tween(Slider.UIElements.SliderIcon.Frame.Thumb, .24, { Size = UDim2.new(0,(Config.Window.NewElements and (Slider.ThumbSize*1.75) or (Slider.ThumbSize))+8,0,Slider.ThumbSize+8) }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
+            -- drag slider
+            Tween(Slider.UIElements.SliderIcon.Frame.Thumb, .24, { ImageTransparency = .85, Size = UDim2.new(0,(Config.Window.NewElements and (Slider.ThumbSize*1.75) or (Slider.ThumbSize))+8,0,Slider.ThumbSize+8) }, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play()
         end
     end)
     
