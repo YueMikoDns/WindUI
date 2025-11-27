@@ -62,8 +62,8 @@ return {
                 end
                 
                 local frame
-                for key, value in pairs(content) do
-                    if typeof(value) == "table" and key:match("Frame$") then
+                for key, value in next, content do
+                    if typeof(value) == "table" and key ~= "ElementFrame" and key:match("Frame$") then
                         frame = value
                         break
                     end

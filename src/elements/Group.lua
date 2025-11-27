@@ -18,7 +18,7 @@ function Element:New(Config)
         New("UIListLayout", {
             FillDirection = "Horizontal",
             HorizontalAlignment = "Center",
-            VerticalAlignment = "Center",
+            --VerticalAlignment = "Center",
             Padding = UDim.new(0, Config.Tab and Config.Tab.Gap or (Window.NewElements and 1 or 6))
         }),
     })
