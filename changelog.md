@@ -3,3 +3,6 @@
 - `Toggle` now smaller in size
 - Added `IconSize` to `Toggle` element
 - Added `WindUI:SetParent()`
+- Added Animation to `Toggle` element
+- Removed animation for themes (it causes lags)
+- Fixed `OpenButton` sizes (and others)

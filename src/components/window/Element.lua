@@ -684,7 +684,13 @@ return function(Config)
 
     function Element.UpdateShape(Tab)
         if Config.Window.NewElements then
-            local newShape = getElementPosition(Tab.Elements, Element.Index)
+            local newShape
+            if Config.ParentConfig.ParentType == "Group" then
+                newShape = "Squircle"
+            else
+                newShape = getElementPosition(Tab.Elements, Element.Index)
+            end
+            
             if newShape and Main then
                 MainTable:SetType(newShape)
                 LockedTable:SetType(newShape)
